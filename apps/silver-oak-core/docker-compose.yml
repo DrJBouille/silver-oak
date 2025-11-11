@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_silver_oak
+    restart: always
+    environment:
+      POSTGRES_USER: silveroak
+      POSTGRES_PASSWORD: 5i0H2Ahd98UHjSFlUa4T0jOg
+      POSTGRES_DB: silver_oak
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

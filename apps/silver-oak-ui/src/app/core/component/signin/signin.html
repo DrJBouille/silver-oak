@@ -1,0 +1,24 @@
+<div class="w-screen h-screen bg-neutral-900 flex justify-center items-center">
+  <form [formGroup]="signinForm" (ngSubmit)="onSubmit()" class="w-1/3 border-2 border-neutral-50 flex flex-col items-center p-4 rounded-lg">
+
+    <div class="w-full">
+      <p class="text-neutral-50 text-xl font-semibold">Username</p>
+      <input type="text" formControlName="username" class="mb-4 border rounded p-2 w-full text-neutral-50">
+    </div>
+
+    <div class="w-full">
+      <p class="text-neutral-50 text-xl font-semibold">Password</p>
+      <input type="password" formControlName="password" class="mb-4 border rounded p-2 w-full text-neutral-50">
+    </div>
+
+    <div class="w-full">
+      <p class="text-neutral-50 text-xl font-semibold">Confirm Password</p>
+      <input type="password" formControlName="confirmPassword" class="mb-4 border rounded p-2 w-full text-neutral-50">
+    </div>
+
+    <div class="w-full">
+      <button type="submit" class="w-full bg-neutral-50 p-2 font-semibold rounded-md hover:rounded-sm cursor-pointer">Login</button>
+      <a href="/login" class="text-neutral-50 font-semibold text-lg underline mt-2">Log in</a>
+    </div>
+  </form>
+</div>

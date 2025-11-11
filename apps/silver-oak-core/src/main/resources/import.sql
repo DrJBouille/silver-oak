@@ -1,0 +1,47 @@
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(16) NOT NULL,
+  password TEXT NOT NULL,
+  is_enabled BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  created_by VARCHAR(16),
+  updated_by VARCHAR(16)
+  );
+
+CREATE TABLE IF NOT EXISTS roles (
+  id SERIAL PRIMARY KEY,
+  role_name VARCHAR(32) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  created_by VARCHAR(16),
+  updated_by VARCHAR(16)
+  );
+
+CREATE TABLE IF NOT EXISTS user_role (
+  user_id INT NOT NULL,
+  role_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
+  PRIMARY KEY (user_id, role_id)
+  );
+
+CREATE TABLE IF NOT EXISTS tokens (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(16) NOT NULL,
+  expiry_date TIMESTAMP,
+  token TEXT NOT NULL,
+  valid BOOLEAN NOT NULL DEFAULT TRUE
+  );
+
+CREATE TABLE IF NOT EXISTS characters (
+  id SERIAL PRIMARY KEY,
+  max_life INT NOT NULL,
+  life INT NOT NULL,
+  damage INT NOT NULL,
+  level INT NOT NULL,
+  experience INT NOT NULL,
+  class_name VARCHAR(20) NOT NULL,
+  user_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  );

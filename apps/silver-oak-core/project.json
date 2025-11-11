@@ -1,0 +1,30 @@
+{
+  "name": "silver-oak-core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/silver-oak-core/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "gradle build",
+        "cwd": "apps/silver-oak-core"
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose down -v && docker compose up -d && gradle bootRun",
+        "cwd": "apps/silver-oak-core"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "gradle test",
+        "cwd": "apps/silver-oak-core"
+      }
+    }
+  },
+  "tags": []
+}

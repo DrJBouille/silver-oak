@@ -1,0 +1,7 @@
+<div class="w-full text-neutral-50 border border-b-neutral-50 rounded-md p-2 my-2 flex justify-between items-center">
+  <p>Damage: {{character.damage}}</p>
+  <p>Level: {{character.level}}</p>
+  <p>PV: {{character.life}}/{{character.maxLife}}</p>
+
+  <button [routerLink]="['/arena', character.id]" class="w-1/2 bg-neutral-50 text-neutral-900 p-2 font-semibold rounded-md hover:rounded-sm cursor-pointer">Fight !</button>
+</div>

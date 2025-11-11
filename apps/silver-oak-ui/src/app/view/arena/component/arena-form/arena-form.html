@@ -1,0 +1,9 @@
+<form [formGroup]="arenaForm" (ngSubmit)="onSubmit()" class="w-full border-2 border-neutral-50 flex flex-col items-center p-4 rounded-lg">
+  <select formControlName="arenaType" class="mb-4 border rounded p-2 w-full text-neutral-50">
+    @for (arenaType of arenaTypes; track arenaType) {
+      <option [value]="arenaType">{{arenaType}}</option>
+    }
+  </select>
+
+  <button type="submit" class="w-full bg-neutral-50 p-2 font-semibold rounded-md hover:rounded-sm cursor-pointer">Fight !</button>
+</form>
