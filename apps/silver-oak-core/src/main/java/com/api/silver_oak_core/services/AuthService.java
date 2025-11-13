@@ -4,13 +4,11 @@ import com.api.silver_oak_core.model.tokens.RefreshTokenRequest;
 import com.api.silver_oak_core.model.tokens.TokensDTO;
 import com.api.silver_oak_core.model.users.LoginRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class AuthService {
   private final TokensService tokensService;

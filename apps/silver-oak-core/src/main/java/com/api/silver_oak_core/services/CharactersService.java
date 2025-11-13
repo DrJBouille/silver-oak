@@ -6,14 +6,12 @@ import com.api.silver_oak_core.model.charaters.CharactersResponseDTO;
 import com.api.silver_oak_core.model.classes.ClassesRegistry;
 import com.api.silver_oak_core.repositories.CharactersRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class CharactersService {
   private final CharactersRepository characterRepository;
