@@ -3,8 +3,9 @@ package com.api.silver_oak_core.controllers;
 import com.api.silver_oak_core.model.arena.Arena;
 import com.api.silver_oak_core.model.arena.ArenaRequestDTO;
 import com.api.silver_oak_core.model.charaters.Characters;
+import com.api.silver_oak_core.registries.EnemiesRegistry;
 import com.api.silver_oak_core.services.CharactersService;
-import com.api.silver_oak_core.services.EnemiesService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +14,13 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/arenas")
+@RequiredArgsConstructor
 public class ArenaController {
   private final CharactersService charactersService;
-  private final EnemiesService enemiesService;
+  private final EnemiesRegistry enemiesRegistry;
 
   private final static Map<Long, Arena> PLAYER_TO_ARENA = new HashMap<>();
 
-  public ArenaController(CharactersService charactersService, EnemiesService enemiesService) {
-    this.charactersService = charactersService;
-    this.enemiesService = enemiesService;
-  }
 
   @PreAuthorize("hasAuthority('USER')")
   @PostMapping
@@ -33,7 +31,7 @@ public class ArenaController {
       if (PLAYER_TO_ARENA.containsKey(character.get().getId())) return ResponseEntity.badRequest().build();
 
       Characters player = character.get();
-      Characters enemy = enemiesService.getByName(arenaRequestDTO.getType());
+      Characters enemy = enemiesRegistry.getByName(arenaRequestDTO.getType());
 
       Arena arena = new Arena(player, enemy);
 
@@ -48,7 +46,7 @@ public class ArenaController {
   @PreAuthorize("hasAuthority('USER')")
   @GetMapping("/types")
   ResponseEntity<Set<String>> getAllTypes() {
-    return ResponseEntity.ok(enemiesService.getEnemies().keySet());
+    return ResponseEntity.ok(enemiesRegistry.getNames());
   }
 
   @PreAuthorize("hasAuthority('USER')")
