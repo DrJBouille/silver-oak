@@ -9,9 +9,4 @@ public class Goblin extends Characters {
   public Goblin() {
     super(0L, 10, 10, 2, 1, 0, new Warrior(), new Sword());
   }
-
-  @Override
-  public int attack() {
-    return this.getDamage();
-  }
 }

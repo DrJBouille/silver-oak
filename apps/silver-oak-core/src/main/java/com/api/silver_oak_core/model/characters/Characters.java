@@ -20,7 +20,6 @@ public class Characters {
 
   public int attack() {
     int weaponDamage = weapon.getDamage();
-    System.out.println(weaponDamage + " " + this.damage);
     return this.damage + weaponDamage;
   }
 }

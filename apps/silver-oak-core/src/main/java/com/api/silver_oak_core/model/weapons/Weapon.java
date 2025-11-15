@@ -16,7 +16,6 @@ public abstract class Weapon {
   private final WeaponType weaponType;
 
   public int getDamage() {
-    int rdm = random.nextInt(damageRange);
-    return rdm + 1 + additionalDamage;
+    return random.nextInt(damageRange) + 1 + additionalDamage;
   }
 }

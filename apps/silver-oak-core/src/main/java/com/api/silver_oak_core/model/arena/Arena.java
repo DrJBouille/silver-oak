@@ -1,6 +1,8 @@
 package com.api.silver_oak_core.model.arena;
 
 import com.api.silver_oak_core.model.characters.Characters;
+import com.api.silver_oak_core.model.simulations.AttackResults;
+import com.api.silver_oak_core.model.simulations.Simulations;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,23 +16,37 @@ public class Arena {
   private boolean isFinished = false;
   private boolean isCharacter1Turn = true;
 
-  public void startSimulation() {
+  public Simulations startSimulation() {
+    Simulations simulation = new Simulations(this);
+
     while (!isFinished) {
-      attack();
+      simulation.addAttackResults(attack());
     }
+
+    return simulation;
   }
 
-  public void attack() {
+  public AttackResults attack() {
     Characters attacker = this.isCharacter1Turn ? this.character1 : this.character2;
     Characters target = this.isCharacter1Turn ? this.character2 : this.character1;
 
-    target.setLife(target.getLife() - attacker.attack());
+    int damage = attacker.attack();
+    int baseDamage = attacker.getDamage();
+    int additionalDamage  = attacker.getWeapon().getAdditionalDamage();
+    int diceDamage = damage - baseDamage - additionalDamage;
 
-    if (character2.getLife() <= 0) {
+    target.setLife(target.getLife() - damage);
+
+    AttackResults attackResult = new AttackResults(damage, diceDamage, baseDamage +  additionalDamage);
+
+    if (target.getLife() <= 0) {
       this.isFinished = true;
       this.doesCharacter1Win = this.isCharacter1Turn;
+      return attackResult;
     }
 
     this.isCharacter1Turn = !this.isCharacter1Turn;
+
+    return attackResult;
   }
 }

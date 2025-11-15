@@ -3,6 +3,7 @@ package com.api.silver_oak_core.controllers;
 import com.api.silver_oak_core.model.arena.Arena;
 import com.api.silver_oak_core.model.arena.ArenaRequestDTO;
 import com.api.silver_oak_core.model.characters.Characters;
+import com.api.silver_oak_core.model.simulations.Simulations;
 import com.api.silver_oak_core.registries.CharactersRegistry;
 import com.api.silver_oak_core.services.CharactersService;
 import lombok.RequiredArgsConstructor;
@@ -45,15 +46,15 @@ public class ArenaController {
 
   @PreAuthorize("hasAuthority('USER')")
   @PostMapping("/simple-simulation")
-  ResponseEntity<Arena> initiateArena() {
+  ResponseEntity<Simulations> initiateArena() {
     try {
       Characters character1 = charactersRegistry.getCharacter("goblin");
       Characters character2 = charactersRegistry.getCharacter("goblin");
 
       Arena arena = new Arena(character1, character2);
-      arena.startSimulation();
+      Simulations simulation = arena.startSimulation();
 
-      return ResponseEntity.ok(arena);
+      return ResponseEntity.ok(simulation);
     } catch (Exception e) {
       return ResponseEntity.internalServerError().build();
     }
