@@ -10,14 +10,14 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 @Service
-public class EnemiesRegistry {
+public class CharactersRegistry {
   private static final Map<String, Supplier<Characters>> ENEMIES = new HashMap<>();
 
   static {
-    ENEMIES.put("Goblin", Goblin::new);
+    ENEMIES.put("goblin", Goblin::new);
   }
 
-  public Characters getByName(String name) throws CloneNotSupportedException {
+  public Characters getCharacter(String name) throws CloneNotSupportedException {
     Supplier<Characters> supplier = ENEMIES.get(name);
 
     if (supplier == null) throw new RuntimeException("Enemy not found: " + name);

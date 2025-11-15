@@ -3,8 +3,11 @@ package com.api.silver_oak_core.controllers;
 import com.api.silver_oak_core.model.charaters.CharactersEntity;
 import com.api.silver_oak_core.model.charaters.CharactersRequestDTO;
 import com.api.silver_oak_core.model.charaters.CharactersResponseDTO;
-import com.api.silver_oak_core.model.classes.ClassesRegistry;
+import com.api.silver_oak_core.model.classes.Classes;
 import com.api.silver_oak_core.model.users.UsersEntity;
+import com.api.silver_oak_core.model.weapons.Weapon;
+import com.api.silver_oak_core.registries.ClassesRegistry;
+import com.api.silver_oak_core.registries.WeaponsRegistry;
 import com.api.silver_oak_core.services.CharactersService;
 import com.api.silver_oak_core.services.UsersService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +26,8 @@ import java.util.Optional;
 public class CharactersController {
   private final CharactersService charactersService;
   private final UsersService usersService;
-
+  private final ClassesRegistry classesRegistry;
+  private final WeaponsRegistry weaponsRegistry;
 
   @PreAuthorize("hasAuthority('USER')")
   @GetMapping
@@ -51,7 +55,9 @@ public class CharactersController {
   @PostMapping()
   ResponseEntity<CharactersResponseDTO> saveCharacter(@RequestBody CharactersRequestDTO charactersRequestDTO, Authentication authentication) {
     try {
-      ClassesRegistry.getByName(charactersRequestDTO.getClassName());
+      Classes characterClass = classesRegistry.getClass(charactersRequestDTO.getClassName());
+      Weapon weapon = weaponsRegistry.getWeapon(charactersRequestDTO.getWeapon());
+      if (!characterClass.getUsableWeapons().contains(weapon.getWeaponType())) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
       String username = authentication.getName();
       UsersEntity user = usersService.getUserByUsername(username);

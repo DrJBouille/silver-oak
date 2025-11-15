@@ -30,6 +30,9 @@ public class CharactersEntity {
   @Column(name = "class_name")
   private String className;
 
+  @Column(name = "weapon_name")
+  private String weaponName;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private UsersEntity user;

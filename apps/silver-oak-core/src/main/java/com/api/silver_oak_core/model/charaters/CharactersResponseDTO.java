@@ -1,6 +1,7 @@
 package com.api.silver_oak_core.model.charaters;
 
 import com.api.silver_oak_core.model.classes.Classes;
+import com.api.silver_oak_core.model.weapons.Weapon;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +23,6 @@ public class CharactersResponseDTO {
   private int experience;
 
   private Classes characterClass;
+
+  private Weapon weapon;
 }
