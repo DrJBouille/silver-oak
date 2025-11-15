@@ -3,7 +3,7 @@ package com.api.silver_oak_core.controllers;
 import com.api.silver_oak_core.model.arena.Arena;
 import com.api.silver_oak_core.model.arena.ArenaRequestDTO;
 import com.api.silver_oak_core.model.charaters.Characters;
-import com.api.silver_oak_core.registries.EnemiesRegistry;
+import com.api.silver_oak_core.registries.CharactersRegistry;
 import com.api.silver_oak_core.services.CharactersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ArenaController {
   private final CharactersService charactersService;
-  private final EnemiesRegistry enemiesRegistry;
+  private final CharactersRegistry charactersRegistry;
 
   private final static Map<Long, Arena> PLAYER_TO_ARENA = new HashMap<>();
 
@@ -31,7 +31,7 @@ public class ArenaController {
       if (PLAYER_TO_ARENA.containsKey(character.get().getId())) return ResponseEntity.badRequest().build();
 
       Characters player = character.get();
-      Characters enemy = enemiesRegistry.getByName(arenaRequestDTO.getType());
+      Characters enemy = charactersRegistry.getCharacter(arenaRequestDTO.getType());
 
       Arena arena = new Arena(player, enemy);
 
@@ -44,9 +44,25 @@ public class ArenaController {
   }
 
   @PreAuthorize("hasAuthority('USER')")
+  @PostMapping("/simulation")
+  ResponseEntity<Arena> initiateArena() {
+    try {
+      Characters character1 = charactersRegistry.getCharacter("goblin");
+      Characters character2 = charactersRegistry.getCharacter("goblin");
+
+      Arena arena = new Arena(character1, character2);
+      arena.startSimulation();
+
+      return ResponseEntity.ok(arena);
+    } catch (Exception e) {
+      return ResponseEntity.internalServerError().build();
+    }
+  }
+
+  @PreAuthorize("hasAuthority('USER')")
   @GetMapping("/types")
   ResponseEntity<Set<String>> getAllTypes() {
-    return ResponseEntity.ok(enemiesRegistry.getNames());
+    return ResponseEntity.ok(charactersRegistry.getNames());
   }
 
   @PreAuthorize("hasAuthority('USER')")
@@ -62,7 +78,7 @@ public class ArenaController {
     if (!PLAYER_TO_ARENA.containsKey(id)) return ResponseEntity.notFound().build();
     Arena arena = PLAYER_TO_ARENA.get(id);
 
-    if (!arena.attack()) return ResponseEntity.badRequest().build();
+    if (!arena.character1attack()) return ResponseEntity.badRequest().build();
 
     if (arena.getIsFinished()) PLAYER_TO_ARENA.remove(id);
     return ResponseEntity.ok(arena);
@@ -74,7 +90,7 @@ public class ArenaController {
     if (!PLAYER_TO_ARENA.containsKey(id)) return ResponseEntity.notFound().build();
     Arena arena = PLAYER_TO_ARENA.get(id);
 
-    if (!arena.enemyAttack()) return ResponseEntity.badRequest().build();
+    if (!arena.character2attack()) return ResponseEntity.badRequest().build();
 
     if (arena.getIsFinished()) PLAYER_TO_ARENA.remove(id);
     return ResponseEntity.ok(arena);
