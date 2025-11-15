@@ -44,7 +44,7 @@ public class ArenaController {
   }
 
   @PreAuthorize("hasAuthority('USER')")
-  @PostMapping("/simulation")
+  @PostMapping("/simple-simulation")
   ResponseEntity<Arena> initiateArena() {
     try {
       Characters character1 = charactersRegistry.getCharacter("goblin");
