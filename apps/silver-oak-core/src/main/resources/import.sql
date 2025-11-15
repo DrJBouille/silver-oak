@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS characters (
   level INT NOT NULL,
   experience INT NOT NULL,
   class_name VARCHAR(20) NOT NULL,
+  weapon_name VARCHAR(20) NOT NULL,
   user_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
   );
