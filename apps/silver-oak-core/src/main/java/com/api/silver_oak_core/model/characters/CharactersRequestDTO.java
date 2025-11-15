@@ -1,4 +1,4 @@
-package com.api.silver_oak_core.model.charaters;
+package com.api.silver_oak_core.model.characters;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

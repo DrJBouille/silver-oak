@@ -1,8 +1,7 @@
 package com.api.silver_oak_core.services;
 
-import com.api.silver_oak_core.model.charaters.Characters;
-import com.api.silver_oak_core.model.charaters.CharactersEntity;
-import com.api.silver_oak_core.model.charaters.CharactersResponseDTO;
+import com.api.silver_oak_core.model.characters.Characters;
+import com.api.silver_oak_core.model.characters.CharactersEntity;
 import com.api.silver_oak_core.registries.ClassesRegistry;
 import com.api.silver_oak_core.registries.WeaponsRegistry;
 import com.api.silver_oak_core.repositories.CharactersRepository;
@@ -19,32 +18,21 @@ public class CharactersService {
   private final ClassesRegistry classesRegistry;
   private final WeaponsRegistry weaponsRegistry;
 
-  public List<CharactersResponseDTO> getCharacters() {
+  public List<Characters> getCharacters() {
     List<CharactersEntity> characters = this.characterRepository.findAll();
 
     return characters.stream().map(this::mapToCharacter).toList();
   }
 
-  public Optional<CharactersResponseDTO> getCharacterEntity(Long id) {
+  public Optional<Characters> getCharacterEntity(Long id) {
     return this.characterRepository.findById(id).map(this::mapToCharacter);
   }
 
 public Optional<Characters> getCharacter(Long id) {
-  return this.characterRepository.findById(id).map(character ->
-      Characters.builder()
-        .id(character.getId())
-        .maxLife(character.getMaxLife())
-        .life(character.getLife())
-        .experience(character.getExperience())
-        .level(character.getLevel())
-        .damage(character.getDamage())
-        .characterClass(classesRegistry.getClass(character.getClassName()))
-        .weapon(weaponsRegistry.getWeapon(character.getWeaponName()))
-        .build()
-  );
+  return this.characterRepository.findById(id).map(this::mapToCharacter);
 }
 
-  public CharactersResponseDTO saveCharacter(CharactersEntity character) {
+  public Characters saveCharacter(CharactersEntity character) {
     return mapToCharacter(this.characterRepository.save(character));
   }
 
@@ -53,8 +41,8 @@ public Optional<Characters> getCharacter(Long id) {
     this.characterRepository.deleteById(id);
   }
 
-  private CharactersResponseDTO mapToCharacter(CharactersEntity character) {
-    return CharactersResponseDTO.builder()
+  private Characters mapToCharacter(CharactersEntity character) {
+    return Characters.builder()
       .id(character.getId())
       .maxLife(character.getMaxLife())
       .life(character.getLife())

@@ -1,6 +1,6 @@
-package com.api.silver_oak_core.model.charaters.enemies;
+package com.api.silver_oak_core.model.characters.default_characters;
 
-import com.api.silver_oak_core.model.charaters.Characters;
+import com.api.silver_oak_core.model.characters.Characters;
 import com.api.silver_oak_core.model.classes.Warrior;
 import com.api.silver_oak_core.model.weapons.heavy.Sword;
 

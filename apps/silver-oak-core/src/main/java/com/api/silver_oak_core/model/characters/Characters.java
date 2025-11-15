@@ -1,4 +1,4 @@
-package com.api.silver_oak_core.model.charaters;
+package com.api.silver_oak_core.model.characters;
 
 import com.api.silver_oak_core.model.classes.Classes;
 import com.api.silver_oak_core.model.weapons.Weapon;

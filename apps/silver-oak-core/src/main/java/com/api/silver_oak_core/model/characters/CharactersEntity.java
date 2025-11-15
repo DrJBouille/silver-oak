@@ -1,4 +1,4 @@
-package com.api.silver_oak_core.model.charaters;
+package com.api.silver_oak_core.model.characters;
 
 import com.api.silver_oak_core.model.users.UsersEntity;
 import jakarta.persistence.*;

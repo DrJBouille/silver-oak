@@ -1,7 +1,7 @@
 package com.api.silver_oak_core.registries;
 
-import com.api.silver_oak_core.model.charaters.Characters;
-import com.api.silver_oak_core.model.charaters.enemies.Goblin;
+import com.api.silver_oak_core.model.characters.Characters;
+import com.api.silver_oak_core.model.characters.default_characters.Goblin;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

@@ -1,8 +1,8 @@
 package com.api.silver_oak_core.controllers;
 
-import com.api.silver_oak_core.model.charaters.CharactersEntity;
-import com.api.silver_oak_core.model.charaters.CharactersRequestDTO;
-import com.api.silver_oak_core.model.charaters.CharactersResponseDTO;
+import com.api.silver_oak_core.model.characters.Characters;
+import com.api.silver_oak_core.model.characters.CharactersEntity;
+import com.api.silver_oak_core.model.characters.CharactersRequestDTO;
 import com.api.silver_oak_core.model.classes.Classes;
 import com.api.silver_oak_core.model.users.UsersEntity;
 import com.api.silver_oak_core.model.weapons.Weapon;
@@ -31,7 +31,7 @@ public class CharactersController {
 
   @PreAuthorize("hasAuthority('USER')")
   @GetMapping
-  ResponseEntity<List<CharactersResponseDTO>> getCharacters() {
+  ResponseEntity<List<Characters>> getCharacters() {
     try {
       return ResponseEntity.ok(this.charactersService.getCharacters());
     } catch (Exception e) {
@@ -41,9 +41,9 @@ public class CharactersController {
 
   @PreAuthorize("hasAuthority('USER')")
   @GetMapping("/{id}")
-  ResponseEntity<CharactersResponseDTO> getCharacter(@PathVariable Long id) {
+  ResponseEntity<Characters> getCharacter(@PathVariable Long id) {
     try {
-      Optional<CharactersResponseDTO> character = this.charactersService.getCharacterEntity(id);
+      Optional<Characters> character = this.charactersService.getCharacterEntity(id);
       return character.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -53,7 +53,7 @@ public class CharactersController {
 
   @PreAuthorize("hasAuthority('USER')")
   @PostMapping()
-  ResponseEntity<CharactersResponseDTO> saveCharacter(@RequestBody CharactersRequestDTO charactersRequestDTO, Authentication authentication) {
+  ResponseEntity<Characters> saveCharacter(@RequestBody CharactersRequestDTO charactersRequestDTO, Authentication authentication) {
     try {
       Classes characterClass = classesRegistry.getClass(charactersRequestDTO.getClassName());
       Weapon weapon = weaponsRegistry.getWeapon(charactersRequestDTO.getWeapon());
