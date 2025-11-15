@@ -1,9 +1,12 @@
 package com.api.silver_oak_core.model.weapons;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Random;
 
+
+@Getter
 @RequiredArgsConstructor
 public abstract class Weapon implements Cloneable {
   private final Random random = new Random();
