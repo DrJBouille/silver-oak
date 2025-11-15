@@ -8,16 +8,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Getter
-public abstract class Classes implements Cloneable {
+public abstract class Classes {
   public final String name;
   public abstract List<WeaponType> getUsableWeapons();
-
-  @Override
-  public Classes clone() {
-    try {
-      return (Classes) super.clone();
-    } catch (CloneNotSupportedException e) {
-      throw new AssertionError();
-    }
-  }
 }

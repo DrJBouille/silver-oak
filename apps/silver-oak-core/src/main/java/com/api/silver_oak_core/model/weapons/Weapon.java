@@ -5,10 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Random;
 
-
 @Getter
 @RequiredArgsConstructor
-public abstract class Weapon implements Cloneable {
+public abstract class Weapon {
   private final Random random = new Random();
 
   private final String name;
@@ -17,15 +16,7 @@ public abstract class Weapon implements Cloneable {
   private final WeaponType weaponType;
 
   public int getDamage() {
-    return random.nextInt(damageRange) + 1 + additionalDamage;
-  }
-
-  @Override
-  public Weapon clone() {
-    try {
-      return  (Weapon) super.clone();
-    } catch (CloneNotSupportedException e) {
-      throw new AssertionError();
-    }
+    int rdm = random.nextInt(damageRange);
+    return rdm + 1 + additionalDamage;
   }
 }

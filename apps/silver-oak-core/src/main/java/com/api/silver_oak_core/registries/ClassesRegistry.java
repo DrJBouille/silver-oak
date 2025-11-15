@@ -22,7 +22,7 @@ public class ClassesRegistry {
     Supplier<Classes> supplier = CLASSES.get(name);
 
     if (supplier == null) throw new RuntimeException("Class not found: " + name);
-    return supplier.get().clone();
+    return supplier.get();
   }
 
   public Set<String> getNames() {
@@ -30,6 +30,6 @@ public class ClassesRegistry {
   }
 
   public List<Classes> getClasses() {
-    return CLASSES.values().stream().map(supplier -> supplier.get().clone()).toList();
+    return CLASSES.values().stream().map(Supplier::get).toList();
   }
 }

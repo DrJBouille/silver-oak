@@ -21,7 +21,7 @@ public class CharactersRegistry {
     Supplier<Characters> supplier = ENEMIES.get(name);
 
     if (supplier == null) throw new RuntimeException("Enemy not found: " + name);
-    return supplier.get().clone();
+    return supplier.get();
   }
 
   public Set<String> getNames() {

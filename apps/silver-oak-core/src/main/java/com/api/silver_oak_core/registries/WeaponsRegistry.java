@@ -22,7 +22,7 @@ public class WeaponsRegistry {
     Supplier<Weapon> supplier = WEAPONS.get(name);
 
     if (supplier == null) throw new RuntimeException("Weapon not found: " + name);
-    return supplier.get().clone();
+    return supplier.get();
   }
 
   public Set<String> getNames() {
@@ -30,6 +30,6 @@ public class WeaponsRegistry {
   }
 
   public List<Weapon> getWeapons() {
-    return WEAPONS.values().stream().map(supplier -> supplier.get().clone()).toList();
+    return WEAPONS.values().stream().map(Supplier::get).toList();
   }
 }

@@ -6,10 +6,9 @@ import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Characters implements Cloneable {
+public class Characters {
   private long id;
   private int maxLife;
   private int life;
@@ -20,17 +19,8 @@ public class Characters implements Cloneable {
   private Weapon weapon;
 
   public int attack() {
-    return this.damage + weapon.getDamage();
-  };
-
-  @Override
-  public Characters clone() throws CloneNotSupportedException {
-    try {
-      Characters clone = (Characters) super.clone();
-      clone.characterClass = this.characterClass != null ? this.characterClass.clone() : null;
-      return clone;
-    } catch (CloneNotSupportedException e) {
-      throw new CloneNotSupportedException();
-    }
+    int weaponDamage = weapon.getDamage();
+    System.out.println(weaponDamage + " " + this.damage);
+    return this.damage + weaponDamage;
   }
 }
