@@ -1,54 +1,36 @@
 package com.api.silver_oak_core.model.arena;
 
-import com.api.silver_oak_core.model.charaters.Characters;
+import com.api.silver_oak_core.model.characters.Characters;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@Setter
+@RequiredArgsConstructor
 public class Arena {
-  private Characters character1;
-  private Characters character2;
+  private final Characters character1;
+  private final Characters character2;
 
-  private Boolean doesCharacter1Win = false;
-  private Boolean isFinished = false;
-  private Boolean isCharacter1Turn = true;
-
-  public Arena(Characters character1, Characters character2) {
-    this.character1 = character1;
-    this.character2 = character2;
-  }
+  private boolean doesCharacter1Win = false;
+  private boolean isFinished = false;
+  private boolean isCharacter1Turn = true;
 
   public void startSimulation() {
     while (!isFinished) {
-      if (isCharacter1Turn) character1attack();
-      else character2attack();
+      attack();
     }
   }
 
-  public Boolean character1attack() {
-    if (!isCharacter1Turn) return false;
-    character2.setLife(this.character2.getLife() - character1.attack());
+  public void attack() {
+    Characters attacker = this.isCharacter1Turn ? this.character1 : this.character2;
+    Characters target = this.isCharacter1Turn ? this.character2 : this.character1;
+
+    target.setLife(target.getLife() - attacker.attack());
 
     if (character2.getLife() <= 0) {
       this.isFinished = true;
-      this.doesCharacter1Win = true;
+      this.doesCharacter1Win = this.isCharacter1Turn;
     }
 
-    this.isCharacter1Turn = false;
-    return true;
-  }
-
-  public Boolean character2attack() {
-    if (isCharacter1Turn) return false;
-    character1.setLife(this.character1.getLife() - character2.attack());
-
-    if (character1.getLife() <= 0) {
-      this.isFinished = true;
-      this.doesCharacter1Win = false;
-    }
-
-    this.isCharacter1Turn = true;
-    return true;
+    this.isCharacter1Turn = !this.isCharacter1Turn;
   }
 }

@@ -1,6 +1,6 @@
 package com.api.silver_oak_core.model.arena;
 
-import com.api.silver_oak_core.model.charaters.Characters;
+import com.api.silver_oak_core.model.characters.Characters;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

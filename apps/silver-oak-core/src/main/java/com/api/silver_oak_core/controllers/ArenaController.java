@@ -2,7 +2,7 @@ package com.api.silver_oak_core.controllers;
 
 import com.api.silver_oak_core.model.arena.Arena;
 import com.api.silver_oak_core.model.arena.ArenaRequestDTO;
-import com.api.silver_oak_core.model.charaters.Characters;
+import com.api.silver_oak_core.model.characters.Characters;
 import com.api.silver_oak_core.registries.CharactersRegistry;
 import com.api.silver_oak_core.services.CharactersService;
 import lombok.RequiredArgsConstructor;
@@ -78,21 +78,9 @@ public class ArenaController {
     if (!PLAYER_TO_ARENA.containsKey(id)) return ResponseEntity.notFound().build();
     Arena arena = PLAYER_TO_ARENA.get(id);
 
-    if (!arena.character1attack()) return ResponseEntity.badRequest().build();
+    arena.attack();
 
-    if (arena.getIsFinished()) PLAYER_TO_ARENA.remove(id);
-    return ResponseEntity.ok(arena);
-  }
-
-  @PreAuthorize("hasAuthority('USER')")
-  @GetMapping("/enemy-attack/{id}")
-  ResponseEntity<Arena> enemyAttack(@PathVariable long id) {
-    if (!PLAYER_TO_ARENA.containsKey(id)) return ResponseEntity.notFound().build();
-    Arena arena = PLAYER_TO_ARENA.get(id);
-
-    if (!arena.character2attack()) return ResponseEntity.badRequest().build();
-
-    if (arena.getIsFinished()) PLAYER_TO_ARENA.remove(id);
+    if (arena.isFinished()) PLAYER_TO_ARENA.remove(id);
     return ResponseEntity.ok(arena);
   }
 }
