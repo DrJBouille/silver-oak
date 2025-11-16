@@ -17,7 +17,7 @@ public class CharactersRegistry {
     ENEMIES.put("goblin", Goblin::new);
   }
 
-  public Characters getCharacter(String name) throws CloneNotSupportedException {
+  public Characters getCharacter(String name) throws RuntimeException {
     Supplier<Characters> supplier = ENEMIES.get(name);
 
     if (supplier == null) throw new RuntimeException("Enemy not found: " + name);

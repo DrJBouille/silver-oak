@@ -4,7 +4,9 @@ import com.api.silver_oak_core.model.arena.Arena;
 import com.api.silver_oak_core.model.arena.ArenaRequestDTO;
 import com.api.silver_oak_core.model.characters.Characters;
 import com.api.silver_oak_core.model.simulations.Simulations;
+import com.api.silver_oak_core.model.simulations.TreeSimulation;
 import com.api.silver_oak_core.registries.CharactersRegistry;
+import com.api.silver_oak_core.services.ArenaService;
 import com.api.silver_oak_core.services.CharactersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import java.util.*;
 public class ArenaController {
   private final CharactersService charactersService;
   private final CharactersRegistry charactersRegistry;
+  private final ArenaService arenaService;
 
   private final static Map<Long, Arena> PLAYER_TO_ARENA = new HashMap<>();
 
@@ -46,7 +49,7 @@ public class ArenaController {
 
   @PreAuthorize("hasAuthority('USER')")
   @PostMapping("/simple-simulation")
-  ResponseEntity<Simulations> initiateArena() {
+  ResponseEntity<Simulations> startSimpleSimulations() {
     try {
       Characters character1 = charactersRegistry.getCharacter("goblin");
       Characters character2 = charactersRegistry.getCharacter("goblin");
@@ -55,6 +58,28 @@ public class ArenaController {
       Simulations simulation = arena.startSimulation();
 
       return ResponseEntity.ok(simulation);
+    } catch (Exception e) {
+      return ResponseEntity.internalServerError().build();
+    }
+  }
+
+  @PreAuthorize("hasAuthority('USER')")
+  @PostMapping("/multi-simulation")
+  ResponseEntity<List<Simulations>> startMultipleSimulations() {
+    try {
+      List<Simulations> simulations = arenaService.runSimulations(1000);
+      return ResponseEntity.ok(simulations);
+    } catch (Exception e) {
+      return ResponseEntity.internalServerError().build();
+    }
+  }
+
+  @PreAuthorize("hasAuthority('USER')")
+  @PostMapping("/tree-simulation")
+  ResponseEntity<TreeSimulation> startTreeSimulations() {
+    try {
+      TreeSimulation treeSimulation = arenaService.runTreeSimulation();
+      return ResponseEntity.ok(treeSimulation);
     } catch (Exception e) {
       return ResponseEntity.internalServerError().build();
     }

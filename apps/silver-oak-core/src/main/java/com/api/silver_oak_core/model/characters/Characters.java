@@ -18,6 +18,17 @@ public class Characters {
   private Classes characterClass;
   private Weapon weapon;
 
+  public Characters(Characters other) {
+    this.id = other.id;
+    this.maxLife = other.maxLife;
+    this.life = other.life;
+    this.damage = other.damage;
+    this.level = other.level;
+    this.experience = other.experience;
+    this.characterClass = other.characterClass;
+    this.weapon = other.weapon;
+  }
+
   public int attack() {
     int weaponDamage = weapon.getDamage();
     return this.damage + weaponDamage;
