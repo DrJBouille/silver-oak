@@ -16,7 +16,7 @@ import java.util.Set;
 @RequestMapping("/api/weapons")
 @RequiredArgsConstructor
 public class WeaponsController {
-  private WeaponsRegistry weaponsRegistry;
+  private final WeaponsRegistry weaponsRegistry;
 
   @PreAuthorize("hasAuthority('USER')")
   @GetMapping("/names")
