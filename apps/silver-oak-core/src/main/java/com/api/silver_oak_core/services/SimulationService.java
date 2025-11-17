@@ -16,7 +16,7 @@ import java.util.concurrent.*;
 
 @Service
 @RequiredArgsConstructor
-public class ArenaService {
+public class SimulationService {
   private final CharactersRegistry charactersRegistry;
 
   ExecutorService executor = Executors.newFixedThreadPool(8);

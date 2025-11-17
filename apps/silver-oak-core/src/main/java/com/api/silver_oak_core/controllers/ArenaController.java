@@ -7,7 +7,7 @@ import com.api.silver_oak_core.model.simulations.Simulations;
 import com.api.silver_oak_core.model.simulations.SimulationsRequestDTO;
 import com.api.silver_oak_core.model.simulations.TreeSimulation;
 import com.api.silver_oak_core.registries.CharactersRegistry;
-import com.api.silver_oak_core.services.ArenaService;
+import com.api.silver_oak_core.services.SimulationService;
 import com.api.silver_oak_core.services.CharactersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ import java.util.*;
 public class ArenaController {
   private final CharactersService charactersService;
   private final CharactersRegistry charactersRegistry;
-  private final ArenaService arenaService;
+  private final SimulationService simulationService;
 
   private final static Map<Long, Arena> PLAYER_TO_ARENA = new HashMap<>();
 
@@ -68,7 +68,7 @@ public class ArenaController {
   @PostMapping("/multi-simulation")
   ResponseEntity<List<Simulations>> startMultipleSimulations() {
     try {
-      List<Simulations> simulations = arenaService.runSimulations(1000);
+      List<Simulations> simulations = simulationService.runSimulations(1000);
       return ResponseEntity.ok(simulations);
     } catch (Exception e) {
       return ResponseEntity.internalServerError().build();
@@ -79,7 +79,7 @@ public class ArenaController {
   @PostMapping("/tree-simulation")
   ResponseEntity<TreeSimulation> startTreeSimulations(@RequestBody SimulationsRequestDTO simulationsRequestDTO) {
     try {
-      TreeSimulation treeSimulation = arenaService.runTreeSimulation(simulationsRequestDTO.firstCharactersName(), simulationsRequestDTO.secondCharactersName());
+      TreeSimulation treeSimulation = simulationService.runTreeSimulation(simulationsRequestDTO.firstCharactersName(), simulationsRequestDTO.secondCharactersName());
       return ResponseEntity.ok(treeSimulation);
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
