@@ -16,7 +16,7 @@ import java.util.Set;
 @RequestMapping("/api/classes")
 @RequiredArgsConstructor
 public class ClassesController {
-  private ClassesRegistry classesRegistry;
+  private final ClassesRegistry classesRegistry;
 
   @PreAuthorize("hasAuthority('USER')")
   @GetMapping("/names")
