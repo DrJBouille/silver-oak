@@ -1,4 +1,6 @@
-export class CharactersResponseDTO {
+import { Classes } from './Classes';
+
+export class Characters {
   constructor(
     public id: number,
     public maxLife: number,
@@ -10,8 +12,4 @@ export class CharactersResponseDTO {
   ) {}
 }
 
-class Classes {
-  constructor(
-    public usableWeapons: string[]
-  ) {}
-}
+

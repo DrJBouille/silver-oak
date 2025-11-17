@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CharactersResponseDTO } from '../../model/CharactersResponseDTO';
+import { Characters } from '../../../../shared/models/Characters';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,5 +9,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './character.css',
 })
 export class Character {
-  @Input() character!: CharactersResponseDTO;
+  @Input() character!: Characters;
 }

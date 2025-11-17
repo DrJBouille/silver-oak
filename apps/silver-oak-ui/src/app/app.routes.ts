@@ -6,12 +6,14 @@ import { Arena } from './view/arena/arena';
 import { Login } from './core/component/login/login';
 import { Signin } from './core/component/signin/signin';
 import { AuthGuard } from './core/guards/auth-guard';
+import { Simulations } from './view/simulations/simulations';
 
 export const appRoutes: Route[] = [
   {path: '', component: MainMenu, canActivate: [AuthGuard]},
   {path: 'characters', component: CharactersList, canActivate: [AuthGuard]},
   {path: 'character-creation', component: CharactersCreation, canActivate: [AuthGuard]},
   {path: 'arena/:characterId', component: Arena, canActivate: [AuthGuard]},
+  {path: 'simulations', component: Simulations, canActivate: [AuthGuard]},
   {path: 'login', component: Login},
   {path: 'signin', component: Signin}
 ];

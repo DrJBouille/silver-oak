@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CharactersService } from '../../shared/services/characters-service';
-import { CharactersResponseDTO } from '../characters/model/CharactersResponseDTO';
+import { Characters } from '../../shared/models/Characters';
 import { Subscription } from 'rxjs';
 import { ClassesService } from './services/classes-service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';

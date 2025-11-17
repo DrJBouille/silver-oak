@@ -1,7 +1,11 @@
-<div class="w-screen h-screen bg-neutral-900 flex justify-center items-center">
-  <div class="p-2 border border-neutral-50 rounded-tr-lg rounded-bl-lg hover:rounded-none duration-150">
-    <button [routerLink]="'/characters'" class="bg-neutral-100 text-3xl font-semibold p-2 px-16 rounded-tr-md rounded-bl-md hover:rounded-none duration-150 cursor-pointer">
+<div class="w-screen h-screen bg-neutral-900 flex flex-col justify-center items-center">
+  <div class="w-1/3 p-2 border border-neutral-50 rounded-tr-lg rounded-bl-lg hover:rounded-none duration-150">
+    <button [routerLink]="'/characters'" class="w-full bg-neutral-100 text-3xl font-semibold p-2 rounded-tr-md rounded-bl-md hover:rounded-none duration-150 cursor-pointer">
       Continue
     </button>
   </div>
+
+  <button [routerLink]="'/simulations'" class="w-1/3 mt-8 text-neutral-100 text-3xl font-semibold p-2 px-16 cursor-pointer border border-neutral-50 rounded-tr-lg rounded-bl-lg hover:rounded-none duration-150">
+    Simulation
+  </button>
 </div>

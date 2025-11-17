@@ -1,9 +1,9 @@
-import { CharactersResponseDTO } from '../../characters/model/CharactersResponseDTO';
+import { Characters } from '../../../shared/models/Characters';
 
 export class ArenaResponseDTO {
   constructor(
-    public player: CharactersResponseDTO,
-    public enemy: CharactersResponseDTO,
+    public player: Characters,
+    public enemy: Characters,
     public doesPlayerWin: boolean,
     public isFinished: boolean,
     public isPlayerTurn: boolean,
