@@ -23,8 +23,6 @@ public class ArenaService {
   CompletionService<Simulations> completionService = new ExecutorCompletionService<>(executor);
 
   public List<Simulations> runSimulations(int ngOfSimulations) throws InterruptedException, ExecutionException {
-    List<Arena> arenas = new ArrayList<>();
-
     for (int i =0; i < ngOfSimulations; i++) {
       Characters character1 = charactersRegistry.getCharacter("goblin");
       Characters character2 = charactersRegistry.getCharacter("goblin");
@@ -41,15 +39,19 @@ public class ArenaService {
     return simulations;
   }
 
-  public TreeSimulation runTreeSimulation() {
-    Characters character1 = charactersRegistry.getCharacter("goblin");
-    Characters character2 = charactersRegistry.getCharacter("goblin");
-    Arena arena = new Arena(character1, character2);
+  public TreeSimulation runTreeSimulation(String firstCharactersName, String secondCharactersName) {
+    try {
+      Characters character1 = charactersRegistry.getCharacter(firstCharactersName);
+      Characters character2 = charactersRegistry.getCharacter(secondCharactersName);
+      Arena arena = new Arena(character1, character2);
 
-    Node root = new Node(new AttackResults(0, 0, 0, false));
-    expend(root, arena);
+      Node root = new Node(new AttackResults(0, 0, 0, false));
+      expend(root, arena);
 
-    return new TreeSimulation(List.of(character1, character2), root);
+      return new TreeSimulation(List.of(character1, character2), root);
+    } catch (Exception e) {
+      throw new RuntimeException("Error in runTreeSimulation");
+    }
   }
 
   public void expend(Node node, Arena arena) {

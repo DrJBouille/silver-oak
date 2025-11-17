@@ -4,6 +4,7 @@ import com.api.silver_oak_core.model.arena.Arena;
 import com.api.silver_oak_core.model.arena.ArenaRequestDTO;
 import com.api.silver_oak_core.model.characters.Characters;
 import com.api.silver_oak_core.model.simulations.Simulations;
+import com.api.silver_oak_core.model.simulations.SimulationsRequestDTO;
 import com.api.silver_oak_core.model.simulations.TreeSimulation;
 import com.api.silver_oak_core.registries.CharactersRegistry;
 import com.api.silver_oak_core.services.ArenaService;
@@ -49,10 +50,10 @@ public class ArenaController {
 
   @PreAuthorize("hasAuthority('USER')")
   @PostMapping("/simple-simulation")
-  ResponseEntity<Simulations> startSimpleSimulations() {
+  ResponseEntity<Simulations> startSimpleSimulations(@RequestBody SimulationsRequestDTO simulationsRequestDTO) {
     try {
-      Characters character1 = charactersRegistry.getCharacter("goblin");
-      Characters character2 = charactersRegistry.getCharacter("goblin");
+      Characters character1 = charactersRegistry.getCharacter(simulationsRequestDTO.firstCharactersName());
+      Characters character2 = charactersRegistry.getCharacter(simulationsRequestDTO.firstCharactersName());
 
       Arena arena = new Arena(character1, character2);
       Simulations simulation = arena.startSimulation();
@@ -76,12 +77,12 @@ public class ArenaController {
 
   @PreAuthorize("hasAuthority('USER')")
   @PostMapping("/tree-simulation")
-  ResponseEntity<TreeSimulation> startTreeSimulations() {
+  ResponseEntity<TreeSimulation> startTreeSimulations(@RequestBody SimulationsRequestDTO simulationsRequestDTO) {
     try {
-      TreeSimulation treeSimulation = arenaService.runTreeSimulation();
+      TreeSimulation treeSimulation = arenaService.runTreeSimulation(simulationsRequestDTO.firstCharactersName(), simulationsRequestDTO.secondCharactersName());
       return ResponseEntity.ok(treeSimulation);
     } catch (Exception e) {
-      return ResponseEntity.internalServerError().build();
+      return ResponseEntity.badRequest().build();
     }
   }
 
