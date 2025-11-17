@@ -5,26 +5,31 @@ import com.api.silver_oak_core.model.characters.default_characters.Goblin;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
 @Service
 public class CharactersRegistry {
-  private static final Map<String, Supplier<Characters>> ENEMIES = new HashMap<>();
+  private static final Map<String, Supplier<Characters>> DEFAULT_CHARACTERS = new HashMap<>();
 
   static {
-    ENEMIES.put("goblin", Goblin::new);
+    DEFAULT_CHARACTERS.put("goblin", Goblin::new);
   }
 
   public Characters getCharacter(String name) throws RuntimeException {
-    Supplier<Characters> supplier = ENEMIES.get(name);
+    Supplier<Characters> supplier = DEFAULT_CHARACTERS.get(name);
 
     if (supplier == null) throw new RuntimeException("Enemy not found: " + name);
     return supplier.get();
   }
 
+  public List<Characters> getCharacters() {
+    return DEFAULT_CHARACTERS.values().stream().map(Supplier::get).toList();
+  }
+
   public Set<String> getNames() {
-    return ENEMIES.keySet();
+    return DEFAULT_CHARACTERS.keySet();
   }
 }

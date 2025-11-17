@@ -6,6 +6,7 @@ import com.api.silver_oak_core.model.characters.CharactersRequestDTO;
 import com.api.silver_oak_core.model.classes.Classes;
 import com.api.silver_oak_core.model.users.UsersEntity;
 import com.api.silver_oak_core.model.weapons.Weapon;
+import com.api.silver_oak_core.registries.CharactersRegistry;
 import com.api.silver_oak_core.registries.ClassesRegistry;
 import com.api.silver_oak_core.registries.WeaponsRegistry;
 import com.api.silver_oak_core.services.CharactersService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/characters")
@@ -28,6 +30,7 @@ public class CharactersController {
   private final UsersService usersService;
   private final ClassesRegistry classesRegistry;
   private final WeaponsRegistry weaponsRegistry;
+  private final CharactersRegistry charactersRegistry;
 
   @PreAuthorize("hasAuthority('USER')")
   @GetMapping
@@ -68,6 +71,36 @@ public class CharactersController {
 
       return ResponseEntity.ok(charactersService.saveCharacter(charactersEntity));
     } catch (Exception e)  {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
+
+  @PreAuthorize("hasAuthority('USER')")
+  @GetMapping("/defaults/{name}")
+  ResponseEntity<Characters> getDefaultCharacters(@PathVariable String name) {
+    try {
+      return ResponseEntity.ok(this.charactersRegistry.getCharacter(name));
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
+
+  @PreAuthorize("hasAuthority('USER')")
+  @GetMapping("/defaults")
+  ResponseEntity<List<Characters>> getDefaultCharacters() {
+    try {
+      return ResponseEntity.ok(this.charactersRegistry.getCharacters());
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
+
+  @PreAuthorize("hasAuthority('USER')")
+  @GetMapping("/defaults-names")
+  ResponseEntity<Set<String>> getDefaultCharactersNames() {
+    try {
+      return ResponseEntity.ok(this.charactersRegistry.getNames());
+    } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
